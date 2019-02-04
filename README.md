@@ -60,14 +60,14 @@ Example Payload (Hello World Windows):
 
 runwin				          press KEY_LEFT_GUI
 delay 500			          print r
-print notepad			      delay 100
+print notepad			          delay 100
 delay 500			          release
-rawpress KEY_RETURN	    delay 500
-delay 2000			        print notepad
-println Hello World!		delay 500
-				                rawpress KEY_RETURN
-				                delay 2000
-				                println Hello World!
+rawpress KEY_RETURN	                  delay 500
+delay 2000			          print notepad
+println Hello World!		          delay 500
+				          rawpress KEY_RETURN
+				          delay 2000
+				          println Hello World!
 
 In my github you can find example payloads for this device (coming soon).
 
