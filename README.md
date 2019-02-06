@@ -30,7 +30,7 @@ Hardware CJMCU-3212: https://es.aliexpress.com/store/product/Beetle-Virtual-Keyb
 
 Pc: If accessed from a computer, it allows you to use your computer's physical keyboard to send pressed keys to the computer where the badUSB is connected.
 
-Phone (Coming soon): If accessed from your mobile phone, allows you to use your mobile phone keyboard from a textarea.
+Phone: If accessed from your mobile phone, allows you to use your mobile phone keyboard from a textarea.
 
 - Live Payload: Allows to execute commands and payloads from a textarea.
 

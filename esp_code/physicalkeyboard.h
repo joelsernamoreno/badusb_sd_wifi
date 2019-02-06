@@ -2,45 +2,8 @@ const char Physical[] PROGMEM = R"=====(
 <html>
   <head>
     <meta charset="UTF-8">
-        <title>BadUsb_PControl</title>
+        <title>Teclado Automático</title>
         <style>
-        #header{text-align: center;}
-      #menu{margin:0 auto; padding:0; height:30px; width:100%; display:block;}
-      #menu li{padding:0; margin:0; list-style:none; display:inline;}
-      .myButton {
-      -moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;
-      -webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;
-      box-shadow:inset 0px 0px 14px -3px #f2fadc;
-      background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));
-      background:-moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-      background:-webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-      background:-o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-      background:-ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
-      background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);
-      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#9ba892',GradientType=0);
-      background-color:#dbe6c4;
-      -moz-border-radius:6px;
-      -webkit-border-radius:6px;
-      border-radius:6px;
-      border:1px solid #b2b8ad;
-      display:inline-block;
-      cursor:pointer;
-      color:#000000;
-      font-family:Arial;
-      font-size:15px;
-      font-weight:bold;
-      padding:6px 24px;
-      text-decoration:none;
-      text-shadow:0px 1px 0px #ced9bf;
-      }
-    body {background-color: black;color:white;}
-    h1 {color:#C4A000;}
-    #mousePanel{text-align:center;}
-    #mousePanel table{background-color:gray;borde:1;border-color:#C4A000;}
-    #Teclado{padding:2%;}
-    #sendText{text-align:center;}
-    .Line {padding-top:2px;background-color:#C4A000;}
-    hr{color:#C4A000;}
         .enlaceboton {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-size: 12pt;
@@ -78,26 +41,12 @@ const char Physical[] PROGMEM = R"=====(
                     mainId.innerHTML = '<textarea id="output" col="100" row="30" ></textarea>';
                     }
                     else {
-                       mainId.innerHTML = '<div id="output"></div>';
+          mainId.innerHTML = '<div id="output"></textarea></div>';
                     }
                     }
         </script>
   </head>
 <body onload="mobileCheck()">
-<div id="header">
-      <h1>BadUSB - Physical Keyboard<h1>
-      <div id="menu">
-        <ul>
-          <li><a class="myButton" href="/virtualkeyboard">Virtual Keyboard</a></li>
-          <li><a class="myButton" href="/physicalkeyboard">Physical Keyboard</a></li>
-          <li><a class="myButton" href="/livepayload">Live Payload</a></li>       
-          <li><a class="myButton" href="/listpayloads">Choose Payload</a></li>
-          <li><a class="myButton" href="/uploadpayload">Upload Payload</a></li>
-
-      </div>
-    </div>
-    <hr>
-
     <a class="enlaceboton" name="F1" alt="F1" href="#" onclick='input_form("rawpress ","KEY_F1")'>F1</a>
     <a Class="enlaceboton" name="F2" alt="F2" href="#" onclick='input_form("rawpress ","KEY_F2")'>F2</a>
     <a Class="enlaceboton" name="F3" alt="F3" href="#" onclick='input_form("rawpress ","KEY_F3")'>F3</a>
@@ -110,13 +59,41 @@ const char Physical[] PROGMEM = R"=====(
     <a Class="enlaceboton" name="F10" alt="F10" href="#" onclick='input_form("rawpress ","KEY_F10")'>F10</a>
     <a Class="enlaceboton" name="F11" alt="F11" href="#" onclick='input_form("rawpress ","KEY_F11")'>F11</a>
     <a Class="enlaceboton" name="F12" alt="F12" href="#" onclick='input_form("rawpress ","KEY_F12")'>F12</a>
-    <a Class="enlaceboton" name="F12" alt="F12" href="#" onclick='input_form("rawpress ","KEY_LEFT_GUI")'>GUI</a>
+    <a Class="enlaceboton" name="runwin" alt="runwin" href="#" onclick='input_form("runwin","")'>Runwin</a>
+    <a Class="enlaceboton" name="rungnome" alt="rungnome" href="#" onclick='input_form("rungnome","")'>Rungnome</a>
+    <a Class="enlaceboton" name="winmac" alt="winmac" href="#" onclick='input_form("winmac","")'>Winmac</a>
+    <a Class="enlaceboton" name="release" alt="release" href="#" onclick='input_form("release","")'>Release</a>
 
-    <p> Type with your physical computer keyboard or with the keyboard of your mobile phone</p>
+    <p> Teclea para ver el resultado</p>
   <!--<textarea id="output1" col="100" row="30" ></textarea> -->
   <div id="main"></div>
 <script>
     window.addEventListener("keydown",function(event){
+ 
+if( navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i)
+                ){
+  var PelementLegth = document.getElementById("output").value.length;
+    
+  setTimeout(function(){    
+  var element = document.getElementById("output");
+  var elementLegth = element.value.length; 
+  let str2 = event.key;
+  var InitElement = elementLegth + (PelementLegth - elementLegth); 
+  if (parseInt(InitElement,10) > parseInt(elementLegth,10)){input_form("rawpress ","KEY_BACKSPACE");}
+  else if (str2 == "Enter"){input_form("rawpress ","KEY_RETURN");}
+  else {
+   var str = element.value.substring(InitElement,elementLegth);
+   input_form("print ",str);
+   }
+    
+  },50);
+      }else{
             var NspecialKey = true; 
             let str = event.key;
       if (str == "Backspace"){
@@ -129,18 +106,12 @@ const char Physical[] PROGMEM = R"=====(
                 input_form("rawpress ","KEY_CAPS_LOCK");
                 NspecialKey= false;}
       var SpecialCharacter = ["Meta","Control","AltGraph","ContextMenu","Shift","End","Tab",
-                                    "Escape","Alt","Home",
-                                    "PageDown","PageUp","Delete","Insert","ArrowRight","ArrowLeft","ArrowUp","ArrowDown"];
+                                    "Escape","Alt","Home","PageDown","PageUp","Delete","Insert","ArrowRight","ArrowLeft","ArrowUp","ArrowDown"];
       let SpecialCharacter_Value ={
-                Meta:"KEY_HOME",Control:"KEY_RIGHT_CTRL",
-                Shift:"KEY_LEFT_SHIFT",
-                End:"KEY_END",Tab:"KEY_TAB",
-                Escape:"KEY_ESC",Alt:"KEY_LEFT_ALT",
-                Home:"KEY_HOME",PageDown:"KEY_PAGE_DOWN",
-                PageUP:"KEY_PAGE_UP",Delete:"KEY_DELETE",
-                Insert:"KEY_INSERT",ArrowLeft:"KEY_LEFT_ARROW",
-                ArrowRight:"KEY_RIGHT_ARROW",ArrowUp:"KEY_UP_ARROW",
-                ArrowDown:"KEY_DOWN_ARROW"}
+                Meta:"KEY_HOME",Control:"KEY_RIGHT_CTRL",Shift:"KEY_LEFT_SHIFT",
+                End:"KEY_END",Tab:"KEY_TAB",Escape:"KEY_ESC",Alt:"KEY_LEFT_ALT",
+                Home:"KEY_HOME",PageDown:"KEY_PAGE_DOWN",PageUP:"KEY_PAGE_UP",Delete:"KEY_DELETE",
+                Insert:"KEY_INSERT",ArrowLeft:"KEY_LEFT_ARROW",ArrowRight:"KEY_RIGHT_ARROW",ArrowUp:"KEY_UP_ARROW",ArrowDown:"KEY_DOWN_ARROW"}
            
       if (SpecialCharacter.indexOf(str) >=  0){
         input_form("press ",SpecialCharacter_Value[str]);
@@ -154,16 +125,16 @@ const char Physical[] PROGMEM = R"=====(
           input_form("print ",str);
       } 
       } 
-          
+      }  
         },true);
 
-    function input_form(action,value){
-      document.getElementById("Sinput").setAttribute("value",value);
-      var textarea;
-      textarea = document.getElementById("tecla");
-      textarea.innerHTML = action + value;
-            document.forms["myForm"].submit();
-    }
+function input_form(action,value){
+ document.getElementById("Sinput").setAttribute("value",value);
+ var textarea;
+ textarea = document.getElementById("tecla");
+ textarea.innerHTML = action + value;
+ document.forms["myForm"].submit();
+}
         </script>
 <form hidden="1" name="myForm" action="/runlivepayload" method="post" id="sendForm" target="iframe">
     <input type="radio" name="livepayloadpresent" value="1" hidden="1" checked="checked">
@@ -172,6 +143,7 @@ const char Physical[] PROGMEM = R"=====(
 </form>
 <iframe style="visibility:hidden;"src="/runlivepayload" name="iframe"></iframe>
 <hr>
+<a href="/"><- BACK TO INDEX</a><br><br>
 </body>
 </html>
 )=====";

@@ -50,7 +50,7 @@ IPAddress local_IP(192,168,1,1);
 IPAddress gateway(192,168,1,1);
 IPAddress subnet(255,255,255,0);
 
-int DelayLength = 1000;
+int DelayLength = 600;
 String webString;
 char autopayload[64];
 int livepayloaddelay;
@@ -61,7 +61,8 @@ File fsUploadFile;
 ESP8266WebServer server(80);
 FtpServer ftpSrv;
 
-const String HTML_CSS_STYLING = "<html> <head>    <title>BadUsb_PControl</title>    <meta charset=\"utf-8\">    <style>     #header{text-align: center;}      #menu{margin:0 auto; padding:0; height:30px; width:100%; display:block;}      #menu li{padding:0; margin:0; list-style:none; display:inline;}     .myButton {     -moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;      -webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;     box-shadow:inset 0px 0px 14px -3px #f2fadc;     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));      background:-moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);     background:-webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);      background:-o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);     background:-ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);      background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#9ba892',GradientType=0);     background-color:#dbe6c4;     -moz-border-radius:6px;     -webkit-border-radius:6px;      border-radius:6px;      border:1px solid #b2b8ad;     display:inline-block;     cursor:pointer;     color:#000000;      font-family:Arial;      font-size:15px;     font-weight:bold;     padding:6px 24px;     text-decoration:none;     text-shadow:0px 1px 0px #ced9bf;      }   body {background-color: black;color:white;}   h1 {color:#C4A000;}   #mousePanel{text-align:center;}   #mousePanel table{background-color:gray;borde:1;border-color:#C4A000;}    #Teclado{padding:2%;}   #sendText{text-align:center;}   .Line {padding-top:2px;background-color:#C4A000;}   hr{color:#C4A000;}    </style>  </head> <body>    <div id=\"header\">     <h1>BadUSB - WiFi Panel Control<h1>     <div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/virtualkeyboard\">Virtual Keyboard</a></li>         <li><a class=\"myButton\" href=\"/physicalkeyboard\">Physical Keyboard</a></li>         <li><a class=\"myButton\" href=\"/livepayload\">Live Payload</a></li>                       <li><a class=\"myButton\" href=\"/listpayloads\">Choose Payload</a></li>          <li><a class=\"myButton\" href=\"/uploadpayload\">Upload Payload</a></li>     </div>    </div>    <hr>";
+const String HTML_CSS_STYLING = "<html> <head>    <title>BadUsb_PControl</title>    <meta charset=\"utf-8\">      </head> <body>    <div id=\"header\">     <h1>BadUSB - WiFi Panel Control<h1>";
+const String HTML_BACK_TO_INDEX = "<a href=\"/\"><- BACK TO INDEX</a><br><br>";
 
 void runpayload() {
     File f = SPIFFS.open(autopayload, "r");
@@ -112,7 +113,7 @@ void handleFileUpload()
 }
 
 void ListPayloads(){
-  String FileList = HTML_CSS_STYLING + "<h><b>Choose Payload:</b></h><br><br>";
+  String FileList = HTML_CSS_STYLING + HTML_BACK_TO_INDEX + "<h><b>Choose Payload:</b></h><br><br>";
   Dir dir = SPIFFS.openDir("/payloads");
   while (dir.next()) {
     String FileName = dir.fileName();
@@ -150,7 +151,7 @@ void setup() {
   });
 
   server.on("/livepayload", [](){
-    server.send(200, "text/html", HTML_CSS_STYLING + "<FORM action=\"/runlivepayload\" method=\"post\" id=\"live\" target=\"iframe\">Payload: <br><br><textarea style =\"width: 100%;\" form=\"live\" rows=\"4\" cols=\"50\" name=\"livepayload\"></textarea><br><br><br><br><br><br><INPUT type=\"radio\" name=\"livepayloadpresent\" value=\"1\" hidden=\"1\" checked=\"checked\"><INPUT type=\"submit\" value=\"Run Payload\"></form><br><hr><br><iframe style =\"visibility: hidden;\" src=\"http://\")+local_IPstr+\"/runlivepayload\" name=\"iframe\"></iframe></body></html>");
+    server.send(200, "text/html", HTML_CSS_STYLING + "<FORM action=\"/runlivepayload\" method=\"post\" id=\"live\" target=\"iframe\">Payload: <br><br><textarea style =\"width: 100%;\" form=\"live\" rows=\"4\" cols=\"50\" name=\"livepayload\"></textarea><br><br><br><br><br><br><INPUT type=\"radio\" name=\"livepayloadpresent\" value=\"1\" hidden=\"1\" checked=\"checked\"><INPUT type=\"submit\" value=\"Run Payload\"></form><br><hr><br><iframe style =\"visibility: hidden;\" src=\"http://\")+local_IPstr+\"/runlivepayload\" name=\"iframe\"></iframe></body></html>" + HTML_BACK_TO_INDEX);
   });
 
   server.on("/runlivepayload", [](){
@@ -195,7 +196,7 @@ void setup() {
   });
 
   server.on("/uploadpayload", []() {
-    server.send(200, "text/html", HTML_CSS_STYLING + "<b><h2>Upload Payload:</h2></b><br><br><form method='POST' action='/upload' enctype='multipart/form-data'><input type='file' name='upload'><input type='submit' value='Upload'></form><br><br><div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/format\">Delete uploaded payloads</a></li><br></body></html>");
+    server.send(200, "text/html", HTML_CSS_STYLING + "<b><h2>Upload Payload:</h2></b><br><br><form method='POST' action='/upload' enctype='multipart/form-data'><input type='file' name='upload'><input type='submit' value='Upload'></form><br><br><div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/format\">Delete uploaded payloads</a></li><br></body></html>" + HTML_BACK_TO_INDEX);
   });
     
   server.on("/listpayloads", ListPayloads);
@@ -203,7 +204,7 @@ void setup() {
   server.onFileUpload(handleFileUpload);
     
   server.on("/upload", HTTP_POST, []() {
-    server.send(200, "text/html", HTML_CSS_STYLING + "<h2>Upload Successful!</h2><br><br></body></html>");
+    server.send(200, "text/html", HTML_CSS_STYLING + "<h2>Upload Successful!</h2><br><br></body></html>" + HTML_BACK_TO_INDEX);
   });
 
   server.on("/showpayload", [](){
@@ -218,11 +219,11 @@ void setup() {
   });
 
   server.on("/format", [](){
-    server.send(200, "text/html", HTML_CSS_STYLING +  "<h2>You will delete all Payloads! Are you sure?</h2><br><br><div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/format/yes\">YES</a></li> - <li><a class=\"myButton\" href=\"/\">NO</a></li></div></body></html>");
+    server.send(200, "text/html", HTML_CSS_STYLING +  "<h2>You will delete all Payloads! Are you sure?</h2><br><br><div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/format/yes\">YES</a></li> - <li><a class=\"myButton\" href=\"/\">NO</a></li></div></body></html>" + HTML_BACK_TO_INDEX);
   });
 
   server.on("/format/yes", [](){
-    server.send(200, "text/html", HTML_CSS_STYLING  + "<h2>Formatting file system: Reload Choose Payload Page</h2>");
+    server.send(200, "text/html", HTML_CSS_STYLING  + "<h2>Formatting file system: Reload Choose Payload Page</h2>" + HTML_BACK_TO_INDEX);
     SPIFFS.format();
   });
 
