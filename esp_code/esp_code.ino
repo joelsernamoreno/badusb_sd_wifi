@@ -31,8 +31,6 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include "ESP8266FtpServer.h"
-#include "virtualkeyboard.h"
-#include "physicalkeyboard.h"
 #include "license.h";
 
 #define BAUD_RATE 115200
@@ -50,7 +48,7 @@ IPAddress local_IP(192,168,1,1);
 IPAddress gateway(192,168,1,1);
 IPAddress subnet(255,255,255,0);
 
-int DelayLength = 600;
+int DelayLength = 100;
 String webString;
 char autopayload[64];
 int livepayloaddelay;
@@ -126,33 +124,37 @@ void ListPayloads(){
 
 void setup() {
 
+  Dir dir;
+  
   Serial.begin(115200);
-  delay(2000);
   SPIFFS.begin();
+
+  if (SPIFFS.begin()){
+    ftpSrv.begin(ftp_username,ftp_password);
+    dir = SPIFFS.openDir("/");
+  }
+
+  while (dir.next()) {
+    String fileName = dir.fileName();
+    size_t fileSize = dir.fileSize();
+    Serial.printf("FS File: %s, size: %s\n", fileName.c_str(), String(fileSize).c_str());
+    Serial.println();
+  }
 
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_IP, gateway,subnet);
 
-    if (SPIFFS.begin()){
-      ftpSrv.begin(ftp_username,ftp_password);
-    } 
-
-  server.on("/", []() {
-    server.send_P(200, "text/html", Virtual);
-  });
-
-  server.on("/virtualkeyboard", []() {
-    server.send_P(200, "text/html", Virtual);
-  });
-
-  server.on("/physicalkeyboard", [](){
-    server.send_P(200, "text/html", Physical);    
-  });
-
-  server.on("/livepayload", [](){
-    server.send(200, "text/html", HTML_CSS_STYLING + "<FORM action=\"/runlivepayload\" method=\"post\" id=\"live\" target=\"iframe\">Payload: <br><br><textarea style =\"width: 100%;\" form=\"live\" rows=\"4\" cols=\"50\" name=\"livepayload\"></textarea><br><br><br><br><br><br><INPUT type=\"radio\" name=\"livepayloadpresent\" value=\"1\" hidden=\"1\" checked=\"checked\"><INPUT type=\"submit\" value=\"Run Payload\"></form><br><hr><br><iframe style =\"visibility: hidden;\" src=\"http://\")+local_IPstr+\"/runlivepayload\" name=\"iframe\"></iframe></body></html>" + HTML_BACK_TO_INDEX);
-  });
+  server.serveStatic("/", SPIFFS, "/virtualkeyboard.html");
+  server.serveStatic("/virtualkeyboard", SPIFFS, "/virtualkeyboard.html");
+  server.serveStatic("/physicalkeyboard", SPIFFS, "/physicalkeyboard.html");
+  server.serveStatic("/livepayload", SPIFFS, "/livepayload.html");
+  server.serveStatic("/uploadpayload", SPIFFS, "/uploadpayload.html");
+  server.serveStatic("/upload", SPIFFS, "/upload.html");
+  server.serveStatic("/format", SPIFFS, "/format.html");
+  server.serveStatic("/format/yes", SPIFFS, "/formatyes.html");
+  server.on("/listpayloads", ListPayloads);
+  server.onFileUpload(handleFileUpload);
 
   server.on("/runlivepayload", [](){
     String livepayload;
@@ -194,19 +196,7 @@ void setup() {
       server.send(200, "text/html", F("Type or Paste a payload and click \"Run Payload\"."));
     }
   });
-
-  server.on("/uploadpayload", []() {
-    server.send(200, "text/html", HTML_CSS_STYLING + "<b><h2>Upload Payload:</h2></b><br><br><form method='POST' action='/upload' enctype='multipart/form-data'><input type='file' name='upload'><input type='submit' value='Upload'></form><br><br><div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/format\">Delete uploaded payloads</a></li><br></body></html>" + HTML_BACK_TO_INDEX);
-  });
     
-  server.on("/listpayloads", ListPayloads);
-    
-  server.onFileUpload(handleFileUpload);
-    
-  server.on("/upload", HTTP_POST, []() {
-    server.send(200, "text/html", HTML_CSS_STYLING + "<h2>Upload Successful!</h2><br><br></body></html>" + HTML_BACK_TO_INDEX);
-  });
-
   server.on("/showpayload", [](){
     webString="";
     String payload;
@@ -217,19 +207,6 @@ void setup() {
     server.send(200, "text/html", HTML_CSS_STYLING + "<a href=\"/dopayload?payload="+payload+"\"><button>Run Payload</button></a><h2><pre>"+payload+"\n-----\n"+webString+"</pre></h2></body></html>");
     webString="";
   });
-
-  server.on("/format", [](){
-    server.send(200, "text/html", HTML_CSS_STYLING +  "<h2>You will delete all Payloads! Are you sure?</h2><br><br><div id=\"menu\">       <ul>          <li><a class=\"myButton\" href=\"/format/yes\">YES</a></li> - <li><a class=\"myButton\" href=\"/\">NO</a></li></div></body></html>" + HTML_BACK_TO_INDEX);
-  });
-
-  server.on("/format/yes", [](){
-    server.send(200, "text/html", HTML_CSS_STYLING  + "<h2>Formatting file system: Reload Choose Payload Page</h2>" + HTML_BACK_TO_INDEX);
-    SPIFFS.format();
-  });
-
- /* server.on("/license", []() {
-    server.send_P(200, "text/html", License);
-  });*/
 
   server.on("/dopayload", [](){
     String dopayload;
