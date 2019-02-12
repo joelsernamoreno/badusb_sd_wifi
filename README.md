@@ -16,7 +16,7 @@ ESPloit is distributed under the MIT License. The license and copyright notice c
 
 BadUSB SD WiFi V1: functional version, but still being tested:
 
-Hardware CJMCU-3212: https://es.aliexpress.com/store/product/Beetle-Virtual-Keyboard-Badusb-Development-Board-ATMEGA32U4-WIFI-ESP8266-ESP-12E-TF-Micro-SD-Card-Storage/2130127_32839570915.html?spm=a219c.search0104.3.2.61317bc05p5MbL&ws_ab_test=searchweb0_0,searchweb201602_4_10065_10068_10547_319_10891_317_10548_10696_10084_453_454_10083_10618_10307_10820_10821_10301_10303_537_536_10902_10059_10884_10887_321_322_10103,searchweb201603_6,ppcSwitch_0&algo_expid=362c8747-8799-4f51-938e-de31b64e17fb-0&algo_pvid=362c8747-8799-4f51-938e-de31b64e17fb&transAbTest=ae803_5
+Hardware CJMCU-3212: https://es.aliexpress.com/store/product/Beetle-Virtual-Keyboard-Badusb-Development-Board-ATMEGA32U4-WIFI-ESP8266-ESP-12E-TF-Micro-SD-Card-Storage/2130127_32839570915.html
 
 1.- Functionalities
 2.- Payloads syntax
