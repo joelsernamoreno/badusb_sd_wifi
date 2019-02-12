@@ -21,6 +21,7 @@ Hardware CJMCU-3212: https://es.aliexpress.com/store/product/Beetle-Virtual-Keyb
 1.- Functionalities
 2.- Payloads syntax
 3.- Instalation
+4.- Upload HTML by FTP
 
 1.-  WiFi functionalities:
 
@@ -52,9 +53,7 @@ Phone: If accessed from your mobile phone, allows you to use your mobile phone k
 - runwin (example: runwin)
 - rungnome (example: rungnome)
 - runmac (example: runmac)
-- execSD_script1 (example: execSD_script1)
-- execSD_script2 (example: execSD_script2)
-- execSD_script3 (example: execSD_script3)
+- execSD ((example: execSD test.txt, execSD helloworld.txt, execSD remote.txt, etc)
 
 In my github you can find example payloads for this device (coming soon).
 
@@ -122,6 +121,10 @@ Windows: https://github.com/nodemcu/nodemcu-flasher
 - Select the Port your device is connected to under Tools – Port.
 
 - Upload the sketch.
+
+
+4.- Upload HTML by FTP
+TBD ...
 
 For any questions you can contact me by twitter: @JoelSernaMoreno
 
