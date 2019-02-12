@@ -72,23 +72,9 @@ char ProcessCommand(char* command) {
     Keyboard.releaseAll();
   }
 
-  // Exec script1.txt (example: execSD_script1)
-  if (str_start(command, "execSD_script1")) {
-    myFile = SD.open("script1.txt");
-    delay(500);
-    ExecScript();
-  }
-
-  // Exec scrip2.txt (example: execSD_script2)
-  if (str_start(command, "execSD_script2")) {
-    myFile = SD.open("script2.txt");
-    delay(500);
-    ExecScript();
-  }
-
-  // Exec script3.txt (example: execSD_script3)
-  if (str_start(command, "execSD_script3")) {
-    myFile = SD.open("script3.txt");
+  // Exec script (example: execSD [name.txt] -- execSD test.txt, execSD helloworld.txt, execSD remote.txt, etc)
+  if (str_start(command, "execSD ")) {
+    myFile = SD.open(command + 7);
     delay(500);
     ExecScript();
   }
