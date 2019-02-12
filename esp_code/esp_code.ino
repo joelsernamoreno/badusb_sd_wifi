@@ -48,7 +48,7 @@ IPAddress local_IP(192,168,1,1);
 IPAddress gateway(192,168,1,1);
 IPAddress subnet(255,255,255,0);
 
-int DelayLength = 100;
+int DelayLength = 1000;
 String webString;
 char autopayload[64];
 int livepayloaddelay;

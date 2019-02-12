@@ -8,7 +8,7 @@ https://github.com/exploitagency/ESPloitV2
 
 ESPloit is distributed under the MIT License. The license and copyright notice can not be removed and must be distributed alongside all future copies of the software.
 
-Special thanks to:
+**Special thanks to:**
 - @Santpapen
 - @ernesto_xload
 - @LucaBongiorni
@@ -23,26 +23,40 @@ Hardware CJMCU-3212: https://es.aliexpress.com/store/product/Beetle-Virtual-Keyb
 3.- Instalation
 4.- Upload HTML by FTP
 
-1.-  WiFi functionalities:
+**1.- WiFi functionalities:**
 
-- Virtual Keyboard: Allows to have a virtual keyboard on the screen (it is recommended to use it in mobile phones).
+- **Virtual Keyboard:** Allows to have a virtual keyboard on the screen (it is recommended to use it in mobile phones).
 
-- Physical Keyboard: This utility has two options: Pc or mobile phone.
+![Alt text](/images/virtualkeyboard.png?raw=true "Virtual Keyboard mode")
+
+- **Physical Keyboard:** This utility has two options: Pc or mobile phone.
 
 Pc: If accessed from a computer, it allows you to use your computer's physical keyboard to send pressed keys to the computer where the badUSB is connected.
 
+![Alt text](/images/physicalpc.png?raw=true "Physical Keyboard PC mode")
+
 Phone: If accessed from your mobile phone, allows you to use your mobile phone keyboard from a textarea.
 
-- Live Payload: Allows to execute commands and payloads from a textarea.
+![Alt text](/images/physicalmobile.jpeg?raw=true "Physical Keyboard mobile mode")
 
-- Choose Payload: Allows you to delete and execute payloads that are stored on the device.
+- **Live Payload:** Allows to execute commands and payloads from a textarea.
 
-- Upload Payload: Allows you to upload a payload to the device.
+![Alt text](/images/livepayload.png?raw=true "Live Payload mode")
 
-- FTP Server: The device has an FTP server enabled. You can use the pftp -i 192.168.1.1 command (Linux) to connect to it.
+- **Choose Payload:** Allows you to delete and execute payloads that are stored on the device.
+
+![Alt text](/images/listpayload.png?raw=true "List Payload mode")
+
+- **Upload Payload:** Allows you to upload a payload to the device.
+
+![Alt text](/images/uploadpayload.png?raw=true "Upload Payload mode")
+
+- **FTP Server:** The device has an FTP server enabled. You can use the pftp -i 192.168.1.1 command (Linux) to connect to it.BadUSB with WiFi that allows to execute payloads from SD
+
+![Alt text](/images/ftp.png?raw=true "FTP server mode")
 
 
-2.-  Payloads syntax:
+**2.- Payloads syntax:**
 
 - print (example: print test)
 - println (example: println test)
@@ -59,7 +73,7 @@ In my github you can find example payloads for this device (coming soon).
 
 
 
-3.-  Instalation:
+**3.- Instalation:**
 
 - Download and Install the Arduino IDE: https://www.arduino.cc/en/main/software
 
@@ -79,7 +93,9 @@ Install "esp8266 by ESP8266 community version 2.3.0". Click "Close".
 - Download/extract BadUSB WiFi SD repo.
 
 
-[ATMEGA32U4][ARDUINO LEONARDO]
+**Upload sketch esp8266Programmer**
+
+![Alt text](/images/normal.png?raw=true "Normal BadUSB")
 
 - Load the esp8266Programmer sketch from the flashing folder.
 
@@ -90,7 +106,7 @@ Install "esp8266 by ESP8266 community version 2.3.0". Click "Close".
 - Upload the sketch.
 
 
-[ESP8266][PROGRAMMING MODE]
+**PROGRAMMING MODE ESP8266**
 
 - Open the ESP_Code sketch from the source folder.
 
@@ -103,6 +119,8 @@ Install "esp8266 by ESP8266 community version 2.3.0". Click "Close".
 - Select Sketch - "Export Compiled Binary".
 
 - Now start ESP8266 in programming mode.
+
+![Alt text](/images/programmingmode.png?raw=true "Programming mode ESP8266")
   
 - Now flash the firmware to the ESP chip using one of the following tools.
 
@@ -112,7 +130,7 @@ sudo python esptool.py --port=/dev/ttyACM0 --baud 115200 write_flash 0x00000 /ho
 
 Windows: https://github.com/nodemcu/nodemcu-flasher
 
-[ATMEGA32U4][ARDUINO LEONARDO]
+**Upload sketch atmega32u4_code**
 
 - Finally open the Arduino_32u4_code sketch from the source folder.
 
@@ -123,8 +141,26 @@ Windows: https://github.com/nodemcu/nodemcu-flasher
 - Upload the sketch.
 
 
-4.- Upload HTML by FTP
-TBD ...
+**4.- Upload HTML by FTP**
 
-For any questions you can contact me by twitter: @JoelSernaMoreno
+- Visualize the wifi networks around you and connect to the badusb wifi network
+
+- Enter the password for the wifi network (default password: badUSBWifi)
+
+- Open a terminal in the HTML directory
+
+- Connect to the badusb FTP server with the following command (linux): pftp -i 192.168.1.1
+
+- Enter the FTP server username and password (default username and password: esp8266)
+
+- Upload all HTML from the directory (example command: put virtualkeyboard.html)
+
+- When you have all the HTML files uploaded, disconnect and reconnect the badusb
+
+- Reconnect to the badusb wifi network and enter password (default password: badUSBWifi)
+
+- Open a browser and access the badusb web panel (default IP: 192.168.1.1)
+
+
+For any questions you can contact me by twitter: **@JoelSernaMoreno**
 
