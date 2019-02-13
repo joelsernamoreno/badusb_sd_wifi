@@ -31,7 +31,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include "ESP8266FtpServer.h"
-#include "license.h";
+#include "license.h"
 
 #define BAUD_RATE 115200
 
@@ -59,7 +59,7 @@ File fsUploadFile;
 ESP8266WebServer server(80);
 FtpServer ftpSrv;
 
-const String HTML_CSS_STYLING = "<html> <head>    <title>BadUsb_PControl</title>    <meta charset=\"utf-8\">      </head> <body>    <div id=\"header\">     <h1>BadUSB - WiFi Panel Control<h1>";
+const String HTML_CSS_STYLING = "<html><head><title>BadUsb_PControl</title><meta charset=\"utf-8\"><style>#header{text-align: center;}#menu{margin:0 auto; padding:0; height:30px; width:100%; display:block;}#menu li{padding:0; margin:0; list-style:none; display:inline;}.myButton {-moz-box-shadow:inset 0px 0px 14px -3px #f2fadc;-webkit-box-shadow:inset 0px 0px 14px -3px #f2fadc;box-shadow:inset 0px 0px 14px -3px #f2fadc;background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));background:-moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);background:-webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);background:-o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);background:-ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);background:linear-gradient(to bottom, #dbe6c4 5%, #9ba892 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe6c4', endColorstr='#9ba892',GradientType=0);background-color:#dbe6c4;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;border:1px solid #b2b8ad;display:inline-block;cursor:pointer;color:#000000;font-family:Arial;font-size:15px;font-weight:bold;padding:6px 24px;text-decoration:none;text-shadow:0px 1px 0px #ced9bf;}body {background-color: black;color:white;}h1 {color:#C4A000;}#mousePanel{text-align:center;}#mousePanel table{background-color:gray;borde:1;border-color:#C4A000;}#Teclado{padding:2%;}#sendText{text-align:center;}.Line {padding-top:2px;background-color:#C4A000;}hr{color:#C4A000;}</style></head><body><div id=\"header\"><h1>BadUSB - WiFi Panel Control<h1><div id=\"menu\"><ul><li><a class=\"myButton\" href=\"/virtualkeyboard\">Virtual Keyboard</a></li><li><a class=\"myButton\" href=\"/physicalkeyboard\">Physical Keyboard</a></li><li><a class=\"myButton\" href=\"/livepayload\">Live Payload</a></li><li><a class=\"myButton\" href=\"/uploadpayload\">Upload Payload</a></li><li><a class=\"myButton\" href=\"/listpayloads\">Choose Payload</a></li></div></div><hr>";
 const String HTML_BACK_TO_INDEX = "<a href=\"/\"><- BACK TO INDEX</a><br><br>";
 
 void runpayload() {
@@ -111,7 +111,7 @@ void handleFileUpload()
 }
 
 void ListPayloads(){
-  String FileList = HTML_CSS_STYLING + HTML_BACK_TO_INDEX + "<h><b>Choose Payload:</b></h><br><br>";
+  String FileList = HTML_CSS_STYLING + "<h><b>Choose Payload:</b></h><br><br>";
   Dir dir = SPIFFS.openDir("/payloads");
   while (dir.next()) {
     String FileName = dir.fileName();
@@ -178,9 +178,6 @@ void setup() {
          String cmd;
          String cmdinput;
          cmd = String(strtok_r(splitlines," ",&i));
-
-//         Serial.println(String()+"cmd:"+cmd);
-//         Serial.println(String()+"cmdin:"+cmdinput);
          
          splitlines = strtok(NULL,"\r\n");       
 
@@ -222,11 +219,9 @@ void setup() {
   });
     
   server.begin();
-
 }
 
 void loop(void) {
   server.handleClient();
   ftpSrv.handleFTP();
-
 }

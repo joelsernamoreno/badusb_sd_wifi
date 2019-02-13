@@ -51,7 +51,7 @@ Phone: If accessed from your mobile phone, allows you to use your mobile phone k
 
 ![Alt text](/images/uploadpayload.png?raw=true "Upload Payload mode")
 
-- **FTP Server:** The device has an FTP server enabled. You can use the pftp -i 192.168.1.1 command (Linux) to connect to it.BadUSB with WiFi that allows to execute payloads from SD
+- **FTP Server:** The device has an FTP server enabled. You can use the pftp -i 192.168.1.1 command (Linux) to connect to it.
 
 ![Alt text](/images/ftp.png?raw=true "FTP server mode")
 
