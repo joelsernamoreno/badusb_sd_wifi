@@ -73,7 +73,7 @@ In my github you can find example payloads for this device (coming soon).
 
 
 
-**3.- Instalation:**
+**3.- Installation:**
 
 - Download and Install the Arduino IDE: https://www.arduino.cc/en/main/software
 
